@@ -2,7 +2,7 @@
   "name": "jianshu",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +10,13 @@
     "jianshu"
   ],
   "author": "you11098@163.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa2": "^2.0.0-alpha.7",
+    "mysql2": "^1.5.2",
+    "sequelize": "^4.37.0"
+  }
 }
