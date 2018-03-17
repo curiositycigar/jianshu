@@ -1,0 +1,35 @@
+```sql
+/*
+    id: bigint
+    name: char(30)
+    描述: vachar(300)
+    邮箱、链接 char(100)
+*/
+create table author (
+    author_id bigint primary key, /* 主键 作者id */
+    avator_id char(30),
+    nick_name char(30),
+    sex tinyint(1) default 0, /* unknow male female */
+    introduction vachar(300),
+    website char(100),
+    er_code bigint, /* image id */
+    createtime datetime,
+    reword_open bool,
+    rewoed_description vachar(300)
+)
+
+create table author_setting (
+    author_id bigint primary key, /*  主键 + 外键 */
+    password char(20) not null,
+    phone char(11),
+    email char(100),
+    editer_type tinyint(1) default 1, /* 1.markdown 2.富文本、等等 */
+    mail_recive boolean default false,
+    disabled boolead default false,
+    balance int default 10 /* 积分 */
+)
+
+create table article (
+)
+
+```
