@@ -39,7 +39,7 @@ create table if not exists author (
     introduction varchar(300),
     website char(100),
     er_code bigint, /* image id */
-    createtime datetime,
+    create_date datetime,
     reword_open bool,
     rewoed_description varchar(300)
 );
