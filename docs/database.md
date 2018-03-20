@@ -33,22 +33,18 @@ create table if not exists source (
 
 create table if not exists author (
     author_id bigint primary key, /* 主键 作者id */
-    avator_id char(30),
+    avator_id bigint,
     nick_name char(30),
     sex tinyint default 0, /* unknow male female */
     introduction varchar(300),
     website char(100),
-    er_code bigint, /* image id */
+    er_code_id bigint, /* image id */
     create_date datetime,
     reword_open bool,
-    rewoed_description varchar(300)
-);
-
-create table if not exists author_setting (
-    author_id bigint primary key, /*  主键 + 外键 */
+    reword_description varchar(300),
     password char(20) not null,
     phone char(11),
-    email char(100),
+    email varchar(100),
     editer_type tinyint default 1, /* 1.markdown 2.富文本、等等 */
     mail_recive boolean default false,
     is_disabled boolean default false,
@@ -91,7 +87,7 @@ create table if not exists subject (
     subject_id bigint primary key,
     name char(50) not null,
     author_id bigint not null,
-    cover bigint, /* 封面图片id */
+    cover_id bigint, /* 封面图片id */
     description varchar(300),
     article_count int default 0,
     follow_count int default 0,
