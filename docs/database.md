@@ -48,6 +48,7 @@ create table if not exists author (
     editer_type tinyint default 1, /* 1.markdown 2.富文本、等等 */
     mail_recive boolean default false,
     is_disabled boolean default false,
+    should_audit_comment boolean default false, /* 是否需要审核评论 */
     balance int default 10 /* 积分 */
 );
 
@@ -95,15 +96,22 @@ create table if not exists subject (
     should_audit boolean default true /* 是否需要审核投稿 */
 );
 
+/* 
+    评论
+    评论审核(是否审核评论)
+ */
+
 create table if not exists comment (
     comment_id bigint primary key,
     target_type tinyint not null,
     target_id bigint not null,
+    target_author_id bigint not null,
     author_id bigint not null,
     content text not null,
     create_date datetime,
     is_reported boolean default false -- 是否被举报
 );
+
 
 create table if not exists sys_message (
     message_id bigint primary key,
@@ -183,12 +191,31 @@ create table if not exists reword (
     primary key (author_id, target_id)
 );
 
+
+/* 
+  举报表，举报成功后将相应实体的可用字段置为false
+  举报记录表: 记录用户被举报次数
+  您被举报次数过多，已停止使用
+  author\article\comment
+ */
+
 create table if not exists illegality_report (
     author_id bigint not null,
     target_id bigint not null,
     target_type tinyint not null,
-    information text not null,
+    information varchar(500) not null,
     create_date datetime default now(),
+    handled boolean default false,
+    primary key (author_id, target_id)
+);
+
+create table if not exists illegality_report (
+    author_id bigint not null,
+    target_id bigint not null,
+    target_type tinyint not null,
+    information varchar(500) not null,
+    create_date datetime default now(),
+    handled boolean default false,
     primary key (author_id, target_id)
 );
 

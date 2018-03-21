@@ -64,6 +64,11 @@ module.exports = function (Sequelize, sequelize) {
       defaultValue: false,
       allowNull: false
     },
+    should_audit_comment: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    },
     is_disabled: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
