@@ -7,6 +7,7 @@
     描述: varchar(300)
     邮箱、链接: char(100)
     node-bigint
+    建立索引，提升查询效率
 */
 create table if not exists target_type (
     target_key tinyint primary key,
@@ -200,17 +201,7 @@ create table if not exists illegality_report (
     author_id bigint not null,
     target_id bigint not null,
     target_type tinyint not null,
-    information varchar(500) not null,
-    create_date datetime default now(),
-    handled boolean default false,
-    primary key (author_id, target_id)
-);
-
-create table if not exists illegality_report (
-    author_id bigint not null,
-    target_id bigint not null,
-    target_type tinyint not null,
-    information varchar(500) not null,
+    description varchar(500) not null,
     create_date datetime default now(),
     handled boolean default false,
     primary key (author_id, target_id)
