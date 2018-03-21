@@ -10,7 +10,7 @@
 */
 create table if not exists target_type (
     target_key tinyint primary key,
-    target_value char(50)
+    target_value varchar(50) not null
 );
 
 create table if not exists editer_type (
@@ -23,7 +23,7 @@ create table if not exists message_type (
     message_value char(50)
 );
 
-create table if not exists source (
+create table if not exists resource (
     source_id bigint primary key,
     source_url char(100) not null,
     source_type tinyint not null
@@ -61,7 +61,7 @@ create table if not exists article (
     content text not null,
     is_publish boolean default false,
     article_group_id bigint not null,
-    createtime datetime default now(),
+    create_date datetime default now(),
     lastmodify datetime default now(),
     /**/
     comment_date datetime,
