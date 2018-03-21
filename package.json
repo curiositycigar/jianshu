@@ -13,6 +13,7 @@
   "author": "you11098@163.com",
   "license": "ISC",
   "dependencies": {
+    "jsonwebtoken": "^8.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
