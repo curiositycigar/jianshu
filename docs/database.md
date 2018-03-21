@@ -43,7 +43,7 @@ create table if not exists author (
     create_date datetime,
     reword_open bool,
     reword_description varchar(300),
-    password char(20) not null,
+    password char(64) not null,
     phone char(11),
     email varchar(100),
     editer_type tinyint default 1, /* 1.markdown 2.富文本、等等 */

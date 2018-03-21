@@ -1,11 +1,18 @@
 /**
  * Created by YOU on 2018/3/19.
  */
+const encrypt = require('../utils').encrypt
+
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('author', {
     author_id: {
       type: Sequelize.UUID,
       primaryKey: true,
+      defaultValue: Sequelize.UUIDV1
+    },
+    salt: {
+      type: Sequelize.UUID,
+      allowNull: false,
       defaultValue: Sequelize.UUIDV1
     },
     avator_id: {
@@ -41,17 +48,20 @@ module.exports = function (Sequelize, sequelize) {
     reword_description: {
       type: Sequelize.STRING(300)
     },
-    password: {
-      type: Sequelize.CHAR(20),
-      allowNull: false
-    },
-    phone: {
-      type: Sequelize.CHAR(11),
-      unique: true
-    },
     email: {
       type: Sequelize.STRING(300),
       allowNull: false,
+      unique: true
+    },
+    password: {
+      type: Sequelize.CHAR(64),
+      allowNull: false,
+      set(val) {
+        this.setDataValue('password', encrypt(val));
+      }
+    },
+    phone: {
+      type: Sequelize.CHAR(11),
       unique: true
     },
     editer_type: {
