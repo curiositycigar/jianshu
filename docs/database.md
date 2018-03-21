@@ -79,8 +79,7 @@ create table if not exists article_group (
     description varchar(300),
     article_count int default 0,
     follow_count int default 0,
-    create_date datetime default now(),
-    is_publish boolean default true
+    create_date datetime default now()
 );
 
 create table if not exists subject (

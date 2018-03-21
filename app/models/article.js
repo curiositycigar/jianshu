@@ -38,12 +38,10 @@ module.exports = function (Sequelize, sequelize) {
     },
     author_id: {
       type: Sequelize.UUID,
-      unique: true,
       allowNull: false
     },
     article_group_id: {
       type: Sequelize.UUID,
-      unique: true,
       allowNull: false
     },
     create_date: {
