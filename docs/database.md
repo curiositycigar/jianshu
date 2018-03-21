@@ -175,7 +175,7 @@ create table if not exists contribute (
     article_id bigint not null,
     author_id bigint not null,
     subject_id bigint not null,
-    status boolean default false,
+    access boolean default false,
     create_date datetime default now(),
     primary key (article_id, author_id)
 );
@@ -184,7 +184,6 @@ create table if not exists reword (
     author_id bigint not null,
     target_id bigint not null,
     count int not null,
-    is_readed boolean default false,
     create_date datetime default now(),
     primary key (author_id, target_id)
 );
