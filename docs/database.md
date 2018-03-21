@@ -124,15 +124,12 @@ create table if not exists sys_message (
 );
 
 create table if not exists conversation (
-    author_id bigint primary key,
-    receiver_id bigint not null,
-    total int default 1,
-    unread_count int default 0,
-    last_message_id bigint not null,
-    create_date datetime default now()
+    conversation_id bigint primary key,
+    author1_id bigint not null,
+    author2_id bigint not null
 );
 
-create table if not exists letter_message (
+create table if not exists conversation_message (
     message_id bigint primary key,
     author_id bigint not null,
     receiver_id bigint not null,
