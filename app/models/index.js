@@ -27,11 +27,28 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-const Author = require('./author')(Sequelize, sequelize)
+const models = {
+  TargetType: require('./target_type')(Sequelize, sequelize),
+  EditerType: require('./editer_type')(Sequelize, sequelize),
+  MessageType: require('./message_type')(Sequelize, sequelize),
+  Resource: require('./resource')(Sequelize, sequelize),
+  Author: require('./author')(Sequelize, sequelize),
+  Article: require('./article')(Sequelize, sequelize),
+  ArticleGroup: require('./article_group')(Sequelize, sequelize),
+  Subject: require('./subject')(Sequelize, sequelize),
+  Comment: require('./comment')(Sequelize, sequelize),
+  SysMessage: require('./sys_message')(Sequelize, sequelize),
+  Conversation: require('./conversation')(Sequelize, sequelize),
+  ConversationMessage: require('./conversation_message')(Sequelize, sequelize),
+  Follow: require('./follow')(Sequelize, sequelize),
+  LikeArticle: require('./like_article')(Sequelize, sequelize),
+  SubjectManager: require('./subject_manager')(Sequelize, sequelize),
+  BlackList: require('./black_list')(Sequelize, sequelize),
+  Contribute: require('./contribute')(Sequelize, sequelize),
+  Reword: require('./reword')(Sequelize, sequelize),
+  IllegalityReport: require('./illegality_report')(Sequelize, sequelize)
+}
 
-Author.sync().then(() => {
-  return Author.create({
-    password: '12321321',
-    email: 'aasdsad@weq.com'
-  });
-})
+sequelize.sync()
+
+module.exports = models
