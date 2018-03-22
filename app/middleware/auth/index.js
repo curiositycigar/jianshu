@@ -36,3 +36,17 @@ exports.signToken = function (key = tokenKey) {
     await next()
   };
 }
+
+exports.unsignToken = function (key = tokenKey) {
+  return async (ctx, next) => {
+    let token = jwt.sign(
+      {data: ''},
+      secret,
+      {
+        expiresIn: 0,
+      },
+    );
+    ctx.cookies.set(key, token);
+    await next()
+  };
+}

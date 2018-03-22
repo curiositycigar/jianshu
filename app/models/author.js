@@ -13,7 +13,7 @@ module.exports = function (Sequelize, sequelize) {
     salt: {
       type: Sequelize.UUID,
       allowNull: false,
-      defaultValue: Sequelize.UUIDV1
+      defaultValue: Sequelize.UUIDV4
     },
     avator_id: {
       type: Sequelize.UUID

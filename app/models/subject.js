@@ -2,7 +2,7 @@
  * Created by YOU on 2018/3/21.
  */
 module.exports = function (Sequelize, sequelize) {
-  return sequelize.define('author', {
+  return sequelize.define('subject', {
     subject_id: {
       type: Sequelize.UUID,
       primaryKey: true,

@@ -9,7 +9,7 @@ const config = require('./config')
 require('./models')
 const app = new Koa()
 
-
+app.use(KoaBodyParser())
 app.use(routes);
 
 app.listen(config.port)
