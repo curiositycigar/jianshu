@@ -6,7 +6,7 @@ module.exports = {
   auth: {
     expiresIn: '1h',
     secret: 'secret',
-    admin: 100,
+    tokenKey: 'token'
   },
   databaseConfig: {
     user: 'mysql',
