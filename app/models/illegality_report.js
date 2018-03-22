@@ -30,28 +30,9 @@ module.exports = function (Sequelize, sequelize) {
       defaultValue: Sequelize.NOW
     },
     handled: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-
-
-    conversation_id: {
-      type: Sequelize.UUID,
-      allowNull: false
-    },
-    receiver_id: {
-      type: Sequelize.UUID,
-      allowNull: false
-    },
-    content: {
-      type: Sequelize.STRING(500),
-      allowNull: false
-    },
-    is_deleted: {
       type: Sequelize.TINYINT,
       allowNull: false,
-      defaultValue: 2
+      defaultValue: 0
     }
   })
 }

@@ -17,8 +17,8 @@ module.exports = function (Sequelize, sequelize) {
       allowNull: false
     },
     access: {
-      type: Sequelize.UUID,
-      defaultValue: false,
+      type: Sequelize.TINYINT,
+      defaultValue: 0,
       allowNull: false
     },
     create_date: {

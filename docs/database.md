@@ -74,7 +74,6 @@ create table if not exists article (
     comment_id bigint,
     is_reported boolean default false, /* 是否被举报 */
     is_revoke boolean default false, /* 是否被撤回 */
-    should_be_audit boolean default false /* 是否需要被审核 */
 );
 
 create table if not exists article_group (
@@ -180,7 +179,7 @@ create table if not exists contribute (
     article_id bigint not null,
     author_id bigint not null,
     subject_id bigint not null,
-    access boolean default false,
+    access tinyint default 0, -- 0 未处理 1 通过 2 已拒绝
     create_date datetime default now(),
     primary key (article_id, author_id)
 );
@@ -207,7 +206,7 @@ create table if not exists illegality_report (
     target_type tinyint not null,
     description varchar(500) not null,
     create_date datetime default now(),
-    handled boolean default false,
+    handled tinyint default 0, -- 0 未处理 1 已通过 2 已拒绝
     primary key (author_id, target_id)
 );
 
