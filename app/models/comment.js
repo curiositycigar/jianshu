@@ -8,6 +8,10 @@ module.exports = function (Sequelize, sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
+    article_id: {
+      type: Sequelize.UUID,
+      allowNull: false
+    },
     target_type: {
       type: Sequelize.TINYINT,
       allowNull: false
