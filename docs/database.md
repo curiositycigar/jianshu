@@ -31,7 +31,11 @@ create table if not exists resource (
 );
 
 
-
+/*
+  上次登录时间
+  上次登录ip
+  本次登录ip
+*/
 create table if not exists author (
     author_id bigint primary key, /* 主键 作者id */
     avator_id bigint,
