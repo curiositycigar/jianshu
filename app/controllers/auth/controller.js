@@ -13,7 +13,7 @@ exports.doRegister = async (ctx, next) => {
 
 exports.doLogin = async (ctx, next) => {
   ctx.body = await createAuthor({
-    email: 'test@mail.mail',
+    email: 'test@mail.com',
     password: '123456'
   })
 }
