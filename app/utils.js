@@ -11,11 +11,11 @@ module.exports = {
   },
   resulthandler: function (result) {
     if (result) {
-      if (result && result.name && result.errors && result.fields) {
+      if (result && result.name && result.errors && result.errors.message) {
         //  数据库错误信息
         return {
           error: {
-            message: '未知错误',
+            message: result.errors.message,
             code: -1
           }
         }
