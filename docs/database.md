@@ -104,6 +104,7 @@ create table if not exists subject (
 
 create table if not exists comment (
     comment_id bigint primary key,
+    article_id bigint not null,
     target_type tinyint not null,
     target_id bigint not null,
     target_author_id bigint not null,
