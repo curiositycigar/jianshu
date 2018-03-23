@@ -9,9 +9,7 @@ const createAuthor = (params) => {
 }
 const validateAccount = (params) => {
   params.password = encrypt(params.password)
-  return new Promise(function (resolve, reject) {
-
-  })
+  return Author.findOne().then(data => data, err => err)
 }
 
 module.exports = {

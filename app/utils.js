@@ -9,10 +9,10 @@ module.exports = {
       .update(data + (salt || 'salt' ))
       .digest('hex');
   },
-  resulthandler: function (result) {
+  resultHandler: function (result) {
     if (result) {
-      if (result && result.name && result.errors && result.errors.message) {
-        //  数据库错误信息
+      if (result && result.name && result.errors && result.errors) {
+        //  错误信息
         return {
           error: {
             message: result.errors.message,
