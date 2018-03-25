@@ -41,7 +41,7 @@ module.exports = function (Sequelize, sequelize) {
       allowNull: false
     },
     reword_open: {
-      type: Sequelize.BLOB,
+      type: Sequelize.BOOLEAN,
       defaultValue: false,
       allowNull: false
     },
