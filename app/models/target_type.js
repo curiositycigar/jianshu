@@ -9,8 +9,13 @@ module.exports = function (Sequelize, sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
+    id: {
+      type: Sequelize.TINYINT,
+      allowNull: false
+    },
     value: {
-      type: Sequelize.STRING(50)
+      type: Sequelize.STRING(50),
+      allowNull: false
     }
   })
 }

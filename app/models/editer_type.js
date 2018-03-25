@@ -3,13 +3,18 @@
  */
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('editer_type', {
-    key: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
+    key: {
+      type: Sequelize.TINYINT,
+      allowNull: false
+    },
     value: {
-      type: Sequelize.STRING(50)
+      type: Sequelize.STRING(50),
+      allowNull: false
     }
   })
 }

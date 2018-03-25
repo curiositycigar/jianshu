@@ -3,9 +3,13 @@
  */
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('contribute', {
-    article_id: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
+      allowNull: false
+    },
+    article_id: {
+      type: Sequelize.UUID,
       allowNull: false
     },
     author_id: {

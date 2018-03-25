@@ -3,7 +3,7 @@
  */
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('conversation', {
-    conversation_id: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1

@@ -3,7 +3,7 @@
  */
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('reword', {
-    reword_id: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
       allowNull: false

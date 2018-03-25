@@ -5,7 +5,7 @@ const encrypt = require('../utils').encrypt
 
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('author', {
-    author_id: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1

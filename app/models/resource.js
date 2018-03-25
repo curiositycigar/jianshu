@@ -3,16 +3,16 @@
  */
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('resource', {
-    source_id: {
+    id: {
       type: Sequelize.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
-    source_url: {
+    resource_url: {
       type: Sequelize.CHAR(30),
       allowNull: false
     },
-    source_type: {
+    resource_type: {
       type: Sequelize.TINYINT,
       allowNull: false
     }
