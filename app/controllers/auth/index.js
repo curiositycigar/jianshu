@@ -7,6 +7,5 @@ const authService = require('../../middleware/auth');
 
 router.get('/register', controller.doRegister);
 router.get('/login', controller.doLogin);
-router.get('/logout', controller.doLogout);
 
 module.exports = router;
