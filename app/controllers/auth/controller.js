@@ -12,7 +12,7 @@ exports.doRegister = async (ctx, next) => {
         email: 'test@mail.com',
         password: '123456'
     })
-    ctx.body = ctx.state.parseBody(result)
+    ctx.body = ctx.setBody(result)
 }
 
 exports.doLogin = async (ctx, next) => {
@@ -20,5 +20,5 @@ exports.doLogin = async (ctx, next) => {
         email: 'test@mail.com',
         password: '123456'
     })
-    ctx.body = ctx.state.parseBody(result, '用户名或密码错误')
+    ctx.body = ctx.setBody(result, '用户名或密码错误')
 }
