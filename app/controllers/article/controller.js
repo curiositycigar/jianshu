@@ -3,18 +3,26 @@
  */
 
 const {
-  createAuthor,
-  validateAccount
-} = require('../../service/')
+  createArticle,
+  deleteArticleById
+} = require('../../service/article')
 
-exports.doRegister = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['email', 'password'])
-  let result = await createAuthor(params)
+const {
+  tokenKey
+} = require('../../config').auth
+
+exports.createArticle = async (ctx, next) => {
+  let params = _.pick(ctx.query, ['title', 'content'])
+  let result = await createArticle(params)
   ctx.body = ctx.setBody(result)
 }
 
-exports.doLogin = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['email', 'password'])
-  let result = await validateAccount(params)
+exports.deleteArticle = async (ctx, next) => {
+  let params = _.pick(ctx.query, ['id', 'password'])
+  params = {
+    id: ctx.query.id,
+    author_id: ctx.state[tokenKey].id
+  }
+  let result = await deleteArticleById(params)
   ctx.body = ctx.setBody(result, '用户名或密码错误')
 }

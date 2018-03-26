@@ -63,21 +63,6 @@ module.exports = function (Sequelize, sequelize) {
     comment_id: {
       type: Sequelize.UUID,
       unique: true
-    },
-    is_reported: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    is_revoke: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    should_be_audit: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
     }
   })
 }

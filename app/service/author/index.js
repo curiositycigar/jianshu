@@ -8,6 +8,16 @@ const createAuthor = (params) => {
   params = _.pick(params, ['email', 'password'])
   return Author.create(params).then(data => data, err => err)
 }
+
+const deleteAuthorById = (query, field) => {
+  let id = query.id || query
+  return Author.destroy(
+    {
+      where: {id}
+    }
+  ).then(data => data, err => err)
+}
+
 const validateAccount = (query) => {
   query = _.pick(query, ['email', 'password'])
   query.password = encrypt(query.password)
@@ -62,6 +72,7 @@ const updateAuthorPasswordById = (query, field) => {
 
 module.exports = {
   createAuthor,
+  deleteAuthorById,
   validateAccount,
   getAuthorById,
   updateAuthorById,

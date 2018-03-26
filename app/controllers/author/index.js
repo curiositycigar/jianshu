@@ -12,5 +12,6 @@ router.get('/login', controller.doLogin);
 router.get('/info', authenticated(), controller.getAuthorInfo);
 router.get('/update', authenticated(), controller.updateAuthorInfo);
 router.get('/changePassword', authenticated(), controller.changePassword);
+router.get('/delete', authenticated(), controller.deleteAuthor);
 
 module.exports = router;

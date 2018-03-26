@@ -3,10 +3,12 @@
  */
 const {
   createAuthor,
+  deleteAuthorById,
   validateAccount,
   getAuthorById,
   updateAuthorById,
-  updateAuthorPasswordByIdPassword
+  updateAuthorPasswordByIdPassword,
+  updateAuthorPasswordById
 } = require('../../service/author')
 const {
   tokenKey
@@ -22,6 +24,11 @@ exports.doRegister = async (ctx, next) => {
     email: 'test@mail.com',
     password: '123456'
   })
+  ctx.body = ctx.setBody(result)
+}
+
+exports.deleteAuthor = async (ctx, next) => {
+  let result = await deleteAuthorById('82691220-310d-11e8-be43-4101130e47aa')
   ctx.body = ctx.setBody(result)
 }
 
