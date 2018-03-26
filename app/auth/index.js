@@ -6,15 +6,16 @@ const {
   secret,
   expiresIn,
   tokenKey
-} = require('../../config').auth
+} = require('../config').auth
 
+const key = tokenKey
 
-exports.authenticated = function (key = tokenKey) {
+const authenticated = function () {
   return async (ctx, next) => {
     let token = ctx.cookies.get(key);
-    if (token && jwt.verify(key, secret)) {
+    if (token && jwt.verify(token, secret)) {
       // token校验通过
-      ctx.state[key] = jwt.decode(token).data;
+      ctx.state[key] = jwt.decode(token);
       await next()
     } else {
       //  没有权限
@@ -23,21 +24,18 @@ exports.authenticated = function (key = tokenKey) {
   }
 }
 
-exports.signToken = function (key = tokenKey) {
-  return async (ctx, next) => {
-    let token = jwt.sign(
-      {data: ctx.state[key]},
-      secret,
-      {
-        expiresIn: expiresIn,
-      },
-    );
-    ctx.cookies.set(key, token);
-    await next()
-  };
+const signToken = function (ctx, data) {
+  let token = jwt.sign(
+    data,
+    secret,
+    {
+      expiresIn: expiresIn,
+    },
+  );
+  ctx.cookies.set(key, token);
 }
 
-exports.unsignToken = function (key = tokenKey) {
+const unSignToken = function () {
   return async (ctx, next) => {
     let token = jwt.sign(
       {data: ''},
@@ -49,4 +47,10 @@ exports.unsignToken = function (key = tokenKey) {
     ctx.cookies.set(key, token);
     await next()
   };
+}
+
+module.exports = {
+  authenticated,
+  signToken,
+  unSignToken
 }

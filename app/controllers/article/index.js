@@ -1,11 +1,10 @@
 /**
- * Created by YOU on 2018/3/22.
+ * Created by YOU on 2018/3/26.
  */
 const router = require('koa-router')();
 const controller = require('./controller');
-const authService = require('../../middleware/auth');
 
 router.get('/register', controller.doRegister);
-router.get('/login', controller.doLogin);
+router.get('/login', controller.doRegister);
 
 module.exports = router;

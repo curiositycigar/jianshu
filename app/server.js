@@ -6,10 +6,12 @@ const Koa = require('koa2');
 const KoaBodyParser = require('koa-bodyparser')
 const routes = require('./routers')()
 const config = require('./config')
-const responseHandler = require('./utils').responseHandler
+const {responseHandler} = require('./utils')
+const lodash = require('lodash')
 require('./models')
 const app = new Koa()
 app.context.setBody = responseHandler
+global._ = lodash
 
 app.use(KoaBodyParser())
 app.use(routes);
