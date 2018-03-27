@@ -17,11 +17,12 @@ module.exports = {
       .digest('hex');
   },
   responseHandler: function (result, message = '未知错误') {
+    console.log('result: ', result)
     let responseData = {}
     if (result) {
-      if (result && result.name && result.errors && result.errors) {
+      if (result && result.name && result.sql) {
         //  错误信息
-        message = result.errors.map(item => item.message).join(' & ')
+        message = result.errors ? result.errors.map(item => item.message).join(' & ') : '未知错误'
         responseData = {
           error: {
             message: message,

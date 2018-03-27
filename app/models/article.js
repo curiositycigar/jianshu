@@ -44,16 +44,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.UUID,
       allowNull: false
     },
-    create_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    },
-    lastmodify: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
     /* 评论 */
     comment_date: {
       type: Sequelize.DATE,

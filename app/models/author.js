@@ -51,7 +51,9 @@ module.exports = function (Sequelize, sequelize) {
     email: {
       type: Sequelize.STRING(300),
       allowNull: false,
-      unique: true,
+      unique: {
+        msg: '邮箱地址已存在'
+      },
       validate: {
         isEmail: {
           msg: '请输入正确的邮箱格式'
