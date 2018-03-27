@@ -3,12 +3,12 @@
  */
 const Article = require('../../models').Article
 
-exports.createArticle = (params) => {
+const createArticle = (params) => {
   params = _.pick(params, ['title', 'content', 'author_id', 'article_group_id'])
   return Article.create(params).then(data => data, err => err)
 }
 
-exports.updateArticleById = (query, field) => {
+const updateArticleById = (query, field) => {
   let id = query.id || query
   field = _.pick(field, ['title', 'content'])
   return Article.update(
@@ -19,7 +19,7 @@ exports.updateArticleById = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
-exports.moveArticleById = (query, field) => {
+const moveArticleById = (query, field) => {
   let id = query.id || query
   field = _.pick(field, ['article_group_id'])
   return Article.update(
@@ -30,7 +30,7 @@ exports.moveArticleById = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
-exports.updateArticleStatusById = (query, field) => {
+const updateArticleStatusById = (query, field) => {
   let id = query.id || query
   field = _.pick(field, ['is_publish'])
   return Article.update(
@@ -41,7 +41,7 @@ exports.updateArticleStatusById = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
-exports.deleteArticleById = (query, field) => {
+const deleteArticleById = (query, field) => {
   let id = query.id || query
   return Article.destroy(
     {
@@ -51,7 +51,7 @@ exports.deleteArticleById = (query, field) => {
 }
 
 
-exports.getArticles = (query) => {
+const getArticles = (query) => {
   query = _.pick(query, ['author_id', 'is_publish', 'article_group_id'])
   return Article.findAll({
     where: {
@@ -60,7 +60,18 @@ exports.getArticles = (query) => {
   }).then(data => data, err => err)
 }
 
-exports.getArticleById = (query) => {
+const getArticleById = (query) => {
   let id = query.id || query
   return Article.findById(id).then(data => data || {}, err => err)
+}
+
+
+module.exports = {
+  createArticle,
+  updateArticleById,
+  moveArticleById,
+  updateArticleStatusById,
+  deleteArticleById,
+  getArticles,
+  getArticleById
 }

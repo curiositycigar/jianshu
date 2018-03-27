@@ -12,17 +12,22 @@ const {
 } = require('../../config').auth
 
 exports.createArticle = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['title', 'content'])
-  let result = await createArticle(params)
-  ctx.body = ctx.setBody(result)
+  let params = ctx.query
+  params.author_id = ctx.state[tokenKey].id
+  if (params.title && params.content && params.article_group_id) {
+    let result = await createArticle(params)
+    ctx.body = ctx.setBody(result, '新建文章失败 ,请稍后再试')
+  } else {
+    ctx.throw(400)
+  }
 }
 
 exports.deleteArticle = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['id', 'password'])
-  params = {
-    id: ctx.query.id,
-    author_id: ctx.state[tokenKey].id
+  let params = ctx.query
+  if (params.id) {
+    let result = await deleteArticleById(params)
+    ctx.body = ctx.setBody(result, '文章不存在')
+  } else {
+    ctx.throw(400)
   }
-  let result = await deleteArticleById(params)
-  ctx.body = ctx.setBody(result, '用户名或密码错误')
 }

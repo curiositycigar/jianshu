@@ -7,8 +7,7 @@ const {
   validateAccount,
   getAuthorById,
   updateAuthorById,
-  updateAuthorPasswordByIdPassword,
-  updateAuthorPasswordById
+  updateAuthorPasswordByIdPassword
 } = require('../../service/author')
 const {
   tokenKey
@@ -20,11 +19,13 @@ const {
 
 
 exports.doRegister = async (ctx, next) => {
-  let result = await createAuthor({
-    email: 'test@mail.com',
-    password: '123456'
-  })
-  ctx.body = ctx.setBody(result)
+  let params = ctx.query
+  if (params.email && params.password) {
+    let result = await createAuthor(params)
+    ctx.body = ctx.setBody(result, '注册请求失败, 请稍后重试')
+  } else {
+    ctx.throw(400)
+  }
 }
 
 exports.deleteAuthor = async (ctx, next) => {
@@ -33,15 +34,17 @@ exports.deleteAuthor = async (ctx, next) => {
 }
 
 exports.doLogin = async (ctx, next) => {
-  let result = await validateAccount({
-    email: 'test@mail.com',
-    password: '123456'
-  })
-  let body = ctx.setBody(result, '用户名或密码错误')
-  if (!body.error) {
-    signToken(ctx, body.data.toJSON())
+  let params = ctx.query
+  if (params.email && params.password) {
+    let result = await validateAccount(params)
+    let body = ctx.setBody(result, '用户名或密码错误')
+    if (!body.error) {
+      signToken(ctx, body.data.toJSON())
+    }
+    ctx.body = body
+  } else {
+    ctx.throw(400)
   }
-  ctx.body = body
 }
 
 exports.getAuthorInfo = async (ctx, next) => {
@@ -66,5 +69,5 @@ exports.changePassword = async (ctx, next) => {
     },
     {password: params.password}
   )
-  ctx.body = ctx.setBody(result, '原始密码验证失败')
+  ctx.body = ctx.setBody(result, '密码验证失败')
 }

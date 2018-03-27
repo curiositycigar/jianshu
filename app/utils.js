@@ -3,6 +3,13 @@
  */
 const crypto = require('crypto')
 
+/*
+* code:
+* 未知错误: -1
+*
+*
+* */
+
 module.exports = {
   encrypt: function (data, salt, secret) {
     return crypto.createHmac('sha256', secret || 'i love this secret!')

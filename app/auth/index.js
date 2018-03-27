@@ -8,31 +8,35 @@ const {
   tokenKey
 } = require('../config').auth
 
-const key = tokenKey
+let key = tokenKey
+global.tokenKey = tokenKey
 
 const authenticated = function () {
   return async (ctx, next) => {
-    let token = ctx.cookies.get(key);
-    if (token && jwt.verify(token, secret)) {
-      // token校验通过
-      ctx.state[key] = jwt.decode(token);
+    let token = ctx.cookies.get(key)
+    try {
+      ctx.state[key] = jwt.verify(token, secret)
+      // console.log(ctx.state[key])
       await next()
-    } else {
-      //  没有权限
+    } catch (e) {
+      console.log(e)
       ctx.throw(403)
     }
   }
 }
 
 const signToken = function (ctx, data) {
+  console.log(new Date(Date.now()).toLocaleString())
   let token = jwt.sign(
     data,
     secret,
     {
       expiresIn: expiresIn,
-    },
-  );
-  ctx.cookies.set(key, token);
+    }
+  )
+  ctx.cookies.set(key, token, {
+    expires: new Date(Date.now() + expiresIn * 1000)
+  })
 }
 
 const unSignToken = function () {
