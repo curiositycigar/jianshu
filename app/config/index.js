@@ -4,7 +4,7 @@
 module.exports = {
   port: 8234,
   auth: {
-    expiresIn: '1h',
+    expiresIn: 60 * 60,
     secret: 'secret',
     tokenKey: 'token'
   },
@@ -13,7 +13,7 @@ module.exports = {
     password: '123456',
     database: 'test',
     options: {
-      host: '192.168.175.130',
+      host: '192.168.212.41',
       // host: '192.168.175.130',
       port: 3306,
       dialect: 'mysql',

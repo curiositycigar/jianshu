@@ -14,7 +14,6 @@ module.exports = function (Sequelize, sequelize) {
     },
     author_id: {
       type: Sequelize.UUID,
-      unique: true,
       allowNull: false
     },
     cover_id: {
