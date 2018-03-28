@@ -8,6 +8,22 @@ module.exports = function (Sequelize, sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
+    author_id: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
+    },
+    article_group_id: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      references: {
+        model: 'article_groups',
+        key: 'id'
+      }
+    },
     title: {
       type: Sequelize.CHAR(30),
       allowNull: false
@@ -35,14 +51,6 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
-    author_id: {
-      type: Sequelize.UUID,
-      allowNull: false
-    },
-    article_group_id: {
-      type: Sequelize.UUID,
-      allowNull: false
     },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,

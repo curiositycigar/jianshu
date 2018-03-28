@@ -10,23 +10,19 @@ module.exports = function (Sequelize, sequelize) {
     },
     article_id: {
       type: Sequelize.UUID,
-      allowNull: false
-    },
-    target_type: {
-      type: Sequelize.TINYINT,
-      allowNull: false
-    },
-    target_id: {
-      type: Sequelize.UUID,
-      allowNull: false
-    },
-    target_author_id: {
-      type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'articles',
+        key: 'id'
+      }
     },
     author_id: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     content: {
       type: Sequelize.TEXT,

@@ -10,15 +10,27 @@ module.exports = function (Sequelize, sequelize) {
     },
     conversation_id: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'conversations',
+        key: 'id'
+      }
     },
     author_id: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     receiver_id: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     content: {
       type: Sequelize.STRING(500),

@@ -15,7 +15,11 @@ module.exports = function (Sequelize, sequelize) {
     author_id: {
       type: Sequelize.UUID,
       unique: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     cover_id: {
       type: Sequelize.UUID

@@ -6,12 +6,20 @@ module.exports = function (Sequelize, sequelize) {
     author_id: {
       type: Sequelize.UUID,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     black_id: {
       type: Sequelize.UUID,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     create_date: {
       type: Sequelize.DATE,

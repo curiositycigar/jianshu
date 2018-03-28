@@ -10,11 +10,19 @@ module.exports = function (Sequelize, sequelize) {
     },
     author1_id: {
       type: Sequelize.UUID,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     },
     author2_id: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
     }
   })
 }
