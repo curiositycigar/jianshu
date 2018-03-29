@@ -20,9 +20,6 @@ module.exports = function (Sequelize, sequelize) {
         key: 'id'
       }
     },
-    cover_id: {
-      type: Sequelize.UUID
-    },
     description: {
       type: Sequelize.STRING(300),
       allowNull: false
