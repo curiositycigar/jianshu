@@ -8,38 +8,43 @@ const createArticleGroup = (params) => {
   return ArticleGroup.create(params).then(data => data, err => err)
 }
 
-const getArticleGroupById = (params) => {
-  params = _.pick(params, ['name', 'description', 'author_id'])
-  return ArticleGroup.create(params).then(data => data, err => err)
+const getArticleGroupById = (query) => {
+  let id = query.id || query
+  return ArticleGroup.findById(id).then(data => data || {}, err => err)
+}
+
+const getArticleGroupsByAuthorId = (query) => {
+  let author_id = query.author_id || query
+  return ArticleGroup.findAll({
+    where: {
+      author_id: author_id
+    }
+  }).then(data => data || {}, err => err)
 }
 
 const updateArticleGroupById = (query, field) => {
-  let id = query.id || query
-  field = _.pick(field, ['name', 'description', 'cover_id'])
+  query = _.pick(query, ['id', 'author_id'])
+  field = _.pick(field, ['name', 'description'])
   return ArticleGroup.update(
     field,
     {
-      where: {id}
+      where: query
     }
   ).then(data => data[0] > 0, err => err)
 }
+
+const deleteArticleGroupById = (query) => {
+  query = _.pick(query, ['id', 'author_id'])
+  return ArticleGroup.destroy(
+    {
+      where: query
+    }
+  ).then(data => data, err => err)
+}
 module.exports = {
   createArticleGroup,
-  updateArticleGroupById
+  getArticleGroupById,
+  getArticleGroupsByAuthorId,
+  updateArticleGroupById,
+  deleteArticleGroupById
 }
-
-function check(list, cb) {
-  var valid = true;
-  list.map(function (value) {
-    var element = $('input[name=' + value.name + ']')
-    element.parent().children('.errMessage').html('')
-    if (value.canEmpty && !element.val()) {
-    } else if (value.reg ? value.reg.test(element.val()) : value.validator(element.val())) {
-    } else {
-      element.parent().children('.errMessage').html('* ' + value.message)
-      valid = false
-    }
-  });
-  cb(valid);
-}
-
