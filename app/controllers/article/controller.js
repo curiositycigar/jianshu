@@ -31,3 +31,5 @@ exports.deleteArticle = async (ctx, next) => {
     ctx.throw(400)
   }
 }
+// 获取自己文章（传入文集id或不传）
+// 获取其他用户文章（根据文集id或用户id或不传）
