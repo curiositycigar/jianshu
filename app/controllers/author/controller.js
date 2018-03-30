@@ -9,9 +9,6 @@ const {
   updateAuthorById,
   updateAuthorPasswordByIdPassword
 } = require('../../service/author')
-const {
-  tokenKey
-} = require('../../config').auth
 
 const {
   signToken
@@ -28,7 +25,9 @@ exports.doRegister = async (ctx, next) => {
   }
 }
 
+// 超级权限
 exports.deleteAuthor = async (ctx, next) => {
+  let query = _.pick(ctx.query, ['id', 'password'])
   let result = await deleteAuthorById('82691220-310d-11e8-be43-4101130e47aa')
   ctx.body = ctx.setBody(result)
 }

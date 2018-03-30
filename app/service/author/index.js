@@ -9,7 +9,7 @@ const createAuthor = (params) => {
   return Author.create(params).then(data => data, err => err)
 }
 
-const deleteAuthorById = (query, field) => {
+const deleteAuthorById = (query) => {
   let id = query.id || query
   return Author.destroy(
     {
