@@ -41,7 +41,7 @@ const getArticles = (query) => {
 
 const getArticle = (query) => {
   query = _.pick(query, ['id', 'author_id', 'is_publish'])
-  return Article.findAll({
+  return Article.findOne({
     where: query
   }).then(data => data || {}, err => err)
 }
@@ -50,8 +50,6 @@ const getArticle = (query) => {
 module.exports = {
   createArticle,
   updateArticleById,
-  moveArticleById,
-  updateArticleStatusById,
   deleteArticleById,
   getArticles,
   getArticle

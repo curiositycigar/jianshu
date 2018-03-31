@@ -8,5 +8,11 @@ const {
 } = require('../../auth')
 
 router.get('/create', authenticated(), controller.createArticle);
+router.get('/delete', authenticated(), controller.deleteArticle);
+router.get('/update', authenticated(), controller.updateArticle);
+router.get('/public', authenticated(), controller.changeArticleStatus);
+router.get('/move', authenticated(), controller.moveArticle);
+router.get('/getMine', authenticated(), controller.getMyArticles);
+router.get('/getOthers', authenticated(), controller.getArticles);
 
 module.exports = router;

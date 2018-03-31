@@ -5,8 +5,6 @@
 const {
   createArticle,
   updateArticleById,
-  moveArticleById,
-  updateArticleStatusById,
   deleteArticleById,
   getArticles,
   getArticle
@@ -36,26 +34,68 @@ exports.deleteArticle = async (ctx, next) => {
     ctx.throw(400)
   }
 }
-// 获取自己文章（传入文集id或不传）
-exports.getMyArticle = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['id'])
+// 获取自己所有文章（传入文集article_group_id或不传）
+exports.getMyArticles = async (ctx, next) => {
+  let params = _.pick(ctx.query, ['article_group_id', 'id'])
   params.author_id = ctx.state[tokenKey].id
   // 自己的文章，不用判断is_publish
-  let result = await getArticle(params)
-  ctx.body = ctx.setBody(result,)
+  if (params.id) {
+    let result = await getArticle(params)
+    ctx.body = ctx.setBody(result, '文章不存在')
+  } else if (params.article_group_id) {
+    let result = await getArticles(params)
+    ctx.body = ctx.setBody(result, '文集不存在')
+  } else {
+    let result = await getArticles(params)
+    ctx.body = ctx.setBody(result)
+  }
 }
-// 获取其他用户文章（根据文集id或用户id或不传）
-exports.getArticle = async (ctx, next) => {
-  let params = _.pick(ctx.query, ['id', 'author_id'])
+// 获取其他用户文章（根据文集article_group_id或用户id或不传）
+exports.getArticles = async (ctx, next) => {
+  let params = _.pick(ctx.query, ['article_group_id', 'author_id', 'id'])
   params.is_publish = true
-  // 自己的文章，不用判断is_publish
-  let result = await getArticle(params)
-  ctx.body = ctx.setBody(result,)
+
+  if (params.id) {
+    let result = await getArticle(params)
+    ctx.body = ctx.setBody(result, '文章不存在')
+  } else if (params.article_group_id) {
+    let result = await getArticles(params)
+    ctx.body = ctx.setBody(result, '文集不存在')
+  } else if (params.author_id){
+    let result = await getArticles(params)
+    ctx.body = ctx.setBody(result, '用户不存在')
+  } else {
+    ctx.throw(400)
+  }
 }
 
 exports.updateArticle = async (ctx, next) => {
   let query = _.pick(params, ['id'])
   let params = _.pick(params, ['title', 'content'])
+  query.author_id = ctx.state[tokenKey].id
+  if (query.id && params.title && params.content) {
+    let result = updateArticleById(query, params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.moveArticle = async (ctx, next) => {
+  let query = _.pick(params, ['id'])
+  let params = _.pick(params, ['article_group_id'])
+  query.author_id = ctx.state[tokenKey].id
+  if (query.id && params.title && params.content) {
+    let result = updateArticleById(query, params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.changeArticleStatus = async (ctx, next) => {
+  let query = _.pick(params, ['id'])
+  let params = _.pick(params, ['is_public'])
   query.author_id = ctx.state[tokenKey].id
   if (query.id && params.title && params.content) {
     let result = updateArticleById(query, params)

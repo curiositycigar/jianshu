@@ -11,5 +11,5 @@ router.get('/create', authenticated(), controller.createArticleGroup);
 router.get('/delete', authenticated(), controller.deleteArticleGroup);
 router.get('/update', authenticated(), controller.updateArticleGroup);
 router.get('/info', authenticated(), controller.getArticleGroup);
-router.get('/getAll', authenticated(), controller.getArticleGroups);
+router.get('/all', authenticated(), controller.getArticleGroups);
 module.exports = router;
