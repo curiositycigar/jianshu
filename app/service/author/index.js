@@ -47,6 +47,7 @@ const getAuthorById = (query) => {
 
 const updateAuthorById = (query, field) => {
   let id = query.id || query
+  field = _.pick(field, [])
   return Author.update(
     field,
     {
