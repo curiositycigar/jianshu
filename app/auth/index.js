@@ -26,7 +26,6 @@ const authenticated = function () {
 }
 
 const signToken = function (ctx, data) {
-  console.log(new Date(Date.now()).toLocaleString())
   let token = jwt.sign(
     data,
     secret,
