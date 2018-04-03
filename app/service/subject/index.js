@@ -44,6 +44,13 @@ const updateSubject = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
+const checkSubjectAndAuthor = (query) => {
+  query = _.pick(query, ['id', 'author_id'])
+  return Subject.findOne({
+    where: query
+  })
+}
+
 module.exports = {
   createSubject,
   getSubjectById,
