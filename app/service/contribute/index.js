@@ -21,6 +21,17 @@ const deleteContribute = (query) => {
   ).then(data => data, err => err)
 }
 
+const updateContribute = (query, field) => {
+  query = _.pick(query, ['id'])
+  field = _.pick(field, ['access'])
+  return Subject.update(
+    field,
+    {
+      where: query
+    }
+  ).then(data => data[0] > 0, err => err)
+}
+
 const getContributes = (query) => {
   // (author_id, access)('access', 'subject_id')()
   query = _.pick(query, ['author_id', 'access', 'subject_id'])
@@ -29,4 +40,11 @@ const getContributes = (query) => {
       ...query
     }
   }).then(data => data, err => err)
+}
+
+module.exports = {
+  createContribute,
+  deleteContribute,
+  getContributes,
+  updateContribute
 }

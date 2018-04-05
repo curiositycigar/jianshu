@@ -12,7 +12,14 @@ const createSubject = (params) => {
 
 const getSubjectById = (query) => {
   let id = query.id || query
-  return Subject.findById(id).then(data => data || {}, err => err)
+  return Subject.findById(id).then(data => data, err => err)
+}
+
+const checkSubjectAuthor = (query) => {
+  query = _.pick(query, ['id', 'author_id'])
+  return Subject.findOne({
+    where: query
+  }).then(data => data, err => err)
 }
 
 const getSubjectsByAuthorId = (query) => {
@@ -21,7 +28,7 @@ const getSubjectsByAuthorId = (query) => {
     where: {
       author_id: author_id
     }
-  }).then(data => data || {}, err => err)
+  }).then(data => data, err => err)
 }
 
 const deleteSubject = (query) => {
@@ -44,17 +51,11 @@ const updateSubject = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
-const checkSubjectAndAuthor = (query) => {
-  query = _.pick(query, ['id', 'author_id'])
-  return Subject.findOne({
-    where: query
-  })
-}
-
 module.exports = {
   createSubject,
   getSubjectById,
   getSubjectsByAuthorId,
   deleteSubject,
-  updateSubject
+  updateSubject,
+  checkSubjectAuthor
 }

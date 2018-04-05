@@ -42,7 +42,7 @@ const getAuthorById = (query) => {
     {
       attributes: {exclude: ['salt', 'password', 'phone', 'email']}
     }
-  ).then(data => data || {}, err => err)
+  ).then(data => data, err => err)
 }
 
 const updateAuthorById = (query, field) => {

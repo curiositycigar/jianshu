@@ -10,7 +10,7 @@ const createArticleGroup = (params) => {
 
 const getArticleGroupById = (query) => {
   let id = query.id || query
-  return ArticleGroup.findById(id).then(data => data || {}, err => err)
+  return ArticleGroup.findById(id).then(data => data, err => err)
 }
 
 const getArticleGroupsByAuthorId = (query) => {
@@ -19,7 +19,7 @@ const getArticleGroupsByAuthorId = (query) => {
     where: {
       author_id: author_id
     }
-  }).then(data => data || {}, err => err)
+  }).then(data => data, err => err)
 }
 
 const updateArticleGroupById = (query, field) => {

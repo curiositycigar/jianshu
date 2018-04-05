@@ -43,7 +43,7 @@ const getArticle = (query) => {
   query = _.pick(query, ['id', 'author_id', 'is_publish'])
   return Article.findOne({
     where: query
-  }).then(data => data || {}, err => err)
+  }).then(data => data, err => err)
 }
 
 
