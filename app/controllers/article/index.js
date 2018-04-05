@@ -13,6 +13,6 @@ router.get('/update', authenticated(), controller.updateArticle);
 router.get('/public', authenticated(), controller.changeArticleStatus);
 router.get('/move', authenticated(), controller.moveArticle);
 router.get('/getMine', authenticated(), controller.getMyArticles);
-router.get('/getOthers', authenticated(), controller.getArticles);
+router.get('/getOthers', controller.getArticles);
 
 module.exports = router;
