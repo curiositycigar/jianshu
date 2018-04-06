@@ -11,6 +11,10 @@ const {
 } = require('../../service/article')
 
 const {
+  getArticleGroupById
+} = require('../../service/article_group')
+
+const {
   tokenKey
 } = require('../../config').auth
 
@@ -18,15 +22,23 @@ exports.createArticle = async (ctx, next) => {
   let params = ctx.query
   params.author_id = ctx.state[tokenKey].id
   if (params.title && params.content && params.article_group_id) {
-    let result = await createArticle(params)
-    ctx.body = ctx.setBody(result, '新建文章失败 ,请稍后再试')
+    //  鉴定当前组是否存在
+    let checkArticleGroup = ctx.setBody(await getArticleGroupById(params.article_group_id))
+    if (checkArticleGroup.error) {
+      // 检查失败
+      ctx.body = ctx.setBody(null, '文集不存在')
+    } else {
+      let result = await createArticle(params)
+      ctx.body = ctx.setBody(result, '新建文章失败 ,请稍后再试')
+    }
   } else {
     ctx.throw(400)
   }
 }
 
 exports.deleteArticle = async (ctx, next) => {
-  let params = ctx.query
+  let params = _.pick(ctx.query, ['id'])
+  params.author_id = ctx.state[tokenKey].id
   if (params.id) {
     let result = await deleteArticleById(params)
     ctx.body = ctx.setBody(result, '文章不存在')
@@ -54,14 +66,13 @@ exports.getMyArticles = async (ctx, next) => {
 exports.getArticles = async (ctx, next) => {
   let params = _.pick(ctx.query, ['article_group_id', 'author_id', 'id'])
   params.is_publish = true
-
   if (params.id) {
     let result = await getArticle(params)
     ctx.body = ctx.setBody(result, '文章不存在')
   } else if (params.article_group_id) {
     let result = await getArticles(params)
     ctx.body = ctx.setBody(result, '文集不存在')
-  } else if (params.author_id){
+  } else if (params.author_id) {
     let result = await getArticles(params)
     ctx.body = ctx.setBody(result, '用户不存在')
   } else {
