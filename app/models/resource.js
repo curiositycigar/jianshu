@@ -8,6 +8,10 @@ module.exports = function (Sequelize, sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
+    author_id: {
+      type: Sequelize.UUID,
+      allowNull: false
+    },
     resource_url: {
       type: Sequelize.CHAR(30),
       allowNull: false

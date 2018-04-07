@@ -5,7 +5,8 @@ const {
   createContribute,
   deleteContribute,
   getContributes,
-  updateContribute
+  updateContribute,
+  getContributeById
 } = require('../../service/contribute')
 const {
   checkSubjectAuthor,
@@ -14,6 +15,9 @@ const {
 const {
   getArticle
 } = require('../../service/article')
+const {
+  checkSubjectManager
+} = require('../../service/subject_manager')
 
 // 投稿者投稿
 exports.createContribute = async (ctx, next) => {
@@ -57,6 +61,39 @@ exports.deleteContribute = async (ctx, next) => {
   }
 }
 
+exports.accessContribute = async (ctx, next) => {
+  let params = ctx.query
+  if (params.id) {
+    let subject = await getSubjectById(params.id)
+    if (subject.error) {
+      ctx.body = ctx.setBody(null, '投稿信息不存在')
+    } else {
+      // 判断是否有权限操作文集
+      // 先通过专题id和当前用户id验证专题拥有者
+      let check = ctx.setBody(await checkSubjectAuthor(subjectQuery))
+      if (check.error) {
+        // 检查是否是管理者
+        check = ctx.setBody(await checkSubjectManager({
+          author_id: ctx.state[tokenKey].id,
+          subject_id: subject.data.id
+        }))
+      }
+      if (check.error) {
+        ctx.body = ctx.setBody(null, '没有操作权限')
+      } else {
+        // 通过或不通过审核
+      }
+    }
+  } else {
+    ctx.throw(400)
+  }
+  let subjectQuery = {id: ctx.query.subject_id}
+  subjectQuery.author_id = ctx.state[tokenKey].id
+  // 先通过专题id和当前用户id验证专题拥有者
+  let check = ctx.setBody(await checkSubjectAuthor(subjectQuery))
+
+}
+
 // 获取我的投稿
 exports.getMyContribute = async (ctx, next) => {
   // 专题id || 是否通过审核
@@ -72,6 +109,13 @@ exports.getContribute = async (ctx, next) => {
   subjectQuery.author_id = ctx.state[tokenKey].id
   // 先通过专题id和当前用户id验证专题拥有者
   let check = ctx.setBody(await checkSubjectAuthor(subjectQuery))
+  if (check.error) {
+    // 检查是否是管理者
+    check = ctx.setBody(await checkSubjectManager({
+      author_id: ctx.state[tokenKey].id,
+      subject_id: subject.data.id
+    }))
+  }
   if (check.error) {
     // 未通过验证，获取已审核通过投稿
     let query = _.pick(ctx.query, ['subject_id'])

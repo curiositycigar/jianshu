@@ -24,7 +24,7 @@ const deleteContribute = (query) => {
 const updateContribute = (query, field) => {
   query = _.pick(query, ['id'])
   field = _.pick(field, ['access'])
-  return Subject.update(
+  return Contribute.update(
     field,
     {
       where: query
@@ -35,16 +35,22 @@ const updateContribute = (query, field) => {
 const getContributes = (query) => {
   // (author_id, access)('access', 'subject_id')()
   query = _.pick(query, ['author_id', 'access', 'subject_id'])
-  return Article.findAll({
+  return Contribute.findAll({
     where: {
       ...query
     }
   }).then(data => data, err => err)
 }
 
+const getContributeById = (query) => {
+  let id = query.id
+  return Contribute.findById(id).then(data => data, err => err)
+}
+
 module.exports = {
   createContribute,
   deleteContribute,
   getContributes,
-  updateContribute
+  updateContribute,
+  getContributeById
 }

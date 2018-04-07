@@ -1,7 +1,9 @@
 /**
  * Created by YOU on 2018/3/26.
  */
-const Article = require('../../models').Article
+const {
+  Article
+} = require('../../models')
 
 const createArticle = (params) => {
   params = _.pick(params, ['title', 'content', 'author_id', 'article_group_id'])
