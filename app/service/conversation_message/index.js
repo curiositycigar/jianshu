@@ -1,18 +1,18 @@
 /**
- * Created by YOU on 2018/4/8.
+ * Created by YOU on 2018/4/9.
  */
 const {
-  SysMessage
+  ConversationMessage
 } = require('../../models')
 
 const createSysMessage = (params) => {
   params = _.pick(params, ['author_id', 'message_type', 'content', 'link'])
-  return SysMessage.create(params).then(data => data, err => err)
+  return ConversationMessage.create(params).then(data => data, err => err)
 }
 
 const deleteSysMessage = (query, field) => {
   query = _.pick(query, ['author_id'])
-  return SysMessage.destroy(
+  return ConversationMessage.destroy(
     {
       where: query
     }
@@ -22,28 +22,28 @@ const deleteSysMessage = (query, field) => {
 const updateSysMessage = (query, field) => {
   query = _.pick(query, ['id', 'author_id'])
   field = _.pick(field, ['is_readed'])
-  return SysMessage.update(field, {
+  return ConversationMessage.update(field, {
     where: query
   }).then(data => data, err => err)
 }
 
 const getSysMessages = (query) => {
   query = _.pick(query, ['author_id', 'is_readed'])
-  return SysMessage.findAll({
+  return ConversationMessage.findAll({
     where: query
   }).then(data => data, err => err)
 }
 
 const getSysMessage = (query) => {
   query = _.pick(query, ['id', 'author_id'])
-  return SysMessage.findOne({
+  return ConversationMessage.findOne({
     where: query
   }).then(data => data, err => err)
 }
 
 const getSysMessageById = (query) => {
   let id = query.id || id
-  return SysMessage.findById(id).then(data => data, err => err)
+  return ConversationMessage.findById(id).then(data => data, err => err)
 }
 
 module.exports = {
