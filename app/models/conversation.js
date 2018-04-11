@@ -8,21 +8,24 @@ module.exports = function (Sequelize, sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV1
     },
-    author1_id: {
+    author_id: {
       type: Sequelize.UUID,
-      primaryKey: true,
       references: {
         model: 'authors',
         key: 'id'
       }
     },
-    author2_id: {
+    talk_to: {
       type: Sequelize.UUID,
-      allowNull: false,
       references: {
         model: 'authors',
         key: 'id'
       }
+    },
+    readed_count: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   })
 }

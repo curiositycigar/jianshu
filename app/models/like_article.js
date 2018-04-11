@@ -20,11 +20,6 @@ module.exports = function (Sequelize, sequelize) {
         model: 'articles',
         key: 'id'
       }
-    },
-    create_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
     }
   })
 }

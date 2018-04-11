@@ -22,6 +22,7 @@ sequelize
   });
 
 const models = {
+  Op: Sequelize.Op,
   Author: require('./author')(Sequelize, sequelize),
   ArticleGroup: require('./article_group')(Sequelize, sequelize),
   Article: require('./article')(Sequelize, sequelize),

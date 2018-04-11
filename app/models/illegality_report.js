@@ -16,7 +16,7 @@ module.exports = function (Sequelize, sequelize) {
         key: 'id'
       }
     },
-    illegality_article_id: {
+    article_id: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
@@ -27,11 +27,6 @@ module.exports = function (Sequelize, sequelize) {
     description: {
       type: Sequelize.STRING(500),
       allowNull: false
-    },
-    create_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
     },
     handled: {
       type: Sequelize.TINYINT,

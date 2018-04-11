@@ -24,27 +24,14 @@ module.exports = function (Sequelize, sequelize) {
         key: 'id'
       }
     },
-    receiver_id: {
-      type: Sequelize.UUID,
-      allowNull: false,
-      references: {
-        model: 'authors',
-        key: 'id'
-      }
-    },
     content: {
       type: Sequelize.STRING(500),
       allowNull: false
     },
-    is_readed: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     is_deleted: {
       type: Sequelize.TINYINT,
       allowNull: false,
-      defaultValue: 2
+      defaultValue: 3 // 3 未删除 1 仅author 2 仅receive 0删除
     },
     create_date: {
       type: Sequelize.DATE,

@@ -28,11 +28,6 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.TEXT,
       allowNull: false
     },
-    create_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    },
     is_reported: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
