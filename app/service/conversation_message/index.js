@@ -10,14 +10,15 @@ const createSysMessage = (params) => {
   return ConversationMessage.create(params).then(data => data, err => err)
 }
 
-const deleteSysMessage = (query, field) => {
-  query = _.pick(query, ['author_id'])
-  return ConversationMessage.destroy(
-    {
-      where: query
-    }
-  ).then(data => data[0] > 0, err => err)
-}
+// // 不提供删除功能 自动删除时间太久的消息
+// const deleteSysMessage = (query, field) => {
+//   query = _.pick(query, ['author_id'])
+//   return ConversationMessage.destroy(
+//     {
+//       where: query
+//     }
+//   ).then(data => data[0] > 0, err => err)
+// }
 
 const updateSysMessage = (query, field) => {
   query = _.pick(query, ['id', 'author_id'])
