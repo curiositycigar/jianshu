@@ -32,6 +32,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.TINYINT,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

@@ -26,6 +26,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

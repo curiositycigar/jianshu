@@ -35,11 +35,6 @@ module.exports = function (Sequelize, sequelize) {
     er_code_id: {
       type: Sequelize.BIGINT
     },
-    createtime: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
-      allowNull: false
-    },
     reword_open: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
@@ -95,6 +90,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.INTEGER,
       defaultValue: 10,
       allowNull: false
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

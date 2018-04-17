@@ -19,6 +19,8 @@ module.exports = function (Sequelize, sequelize) {
     resource_type: {
       type: Sequelize.TINYINT,
       allowNull: false
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

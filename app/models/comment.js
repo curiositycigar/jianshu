@@ -32,6 +32,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

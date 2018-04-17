@@ -41,6 +41,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

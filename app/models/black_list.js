@@ -20,6 +20,8 @@ module.exports = function (Sequelize, sequelize) {
         model: 'authors',
         key: 'id'
       }
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

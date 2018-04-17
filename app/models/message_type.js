@@ -15,6 +15,8 @@ module.exports = function (Sequelize, sequelize) {
     value: {
       type: Sequelize.STRING(50),
       allowNull: false
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

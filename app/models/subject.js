@@ -38,11 +38,6 @@ module.exports = function (Sequelize, sequelize) {
       allowNull: false,
       defaultValue: 0
     },
-    create_date: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
-      allowNull: false
-    },
     allow_contribute: {
       type: Sequelize.BOOLEAN,
       defaultValue: true,
@@ -52,6 +47,8 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.BOOLEAN,
       defaultValue: true,
       allowNull: false
-    }
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }

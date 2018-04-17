@@ -33,10 +33,7 @@ module.exports = function (Sequelize, sequelize) {
       allowNull: false,
       defaultValue: 3 // 3 未删除 1 仅author 2 仅receive 0删除
     },
-    create_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    }
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
   })
 }
