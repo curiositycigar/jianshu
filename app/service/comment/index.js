@@ -10,7 +10,7 @@ const createComment = (params) => {
   return Comment.create(params).then(data => data, err => err)
 }
 
-const deleteComment = (query, field) => {
+const deleteComment = (query) => {
   query = _.pick(query, ['author_id', 'id'])
   return Comment.destroy(
     {
@@ -33,15 +33,10 @@ const getComment = (query) => {
   }).then(data => data, err => err)
 }
 
-const getCommentById = (query) => {
-  let id = query.id || id
-  return Comment.findById(id).then(data => data, err => err)
-}
 
 module.exports = {
   createComment,
   deleteComment,
   getComment,
-  getCommentById,
   getComments
 }

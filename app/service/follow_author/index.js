@@ -6,12 +6,12 @@ const {
 } = require('../../models')
 
 const createFollowAuthor = (params) => {
-  params = _.pick(params, ['author_id', 'article_group_id'])
+  params = _.pick(params, ['author_id', 'follow_author_id'])
   return FollowAuthor.create(params).then(data => data, err => err)
 }
 
 const deleteFollowAuthor = (query, field) => {
-  query = _.pick(query, ['author_id', 'article_group_id'])
+  query = _.pick(query, ['author_id', 'follow_author_id'])
   return FollowAuthor.destroy(
     {
       where: query
@@ -20,7 +20,7 @@ const deleteFollowAuthor = (query, field) => {
 }
 
 const getFollowAuthors = (query) => {
-  query = _.pick(query, ['author_id', 'article_group_id'])
+  query = _.pick(query, ['author_id', 'follow_author_id'])
   return FollowAuthor.findAll({
     where: query
   }).then(data => data, err => err)

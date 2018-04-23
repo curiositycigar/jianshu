@@ -11,7 +11,7 @@ const createBlackList = (params) => {
 }
 
 const deleteBlackList = (query, field) => {
-  query = _.pick(query, ['author_id'])
+  query = _.pick(query, ['author_id', 'black_id'])
   return BlackList.destroy(
     {
       where: query
