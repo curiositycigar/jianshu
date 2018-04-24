@@ -1,7 +1,10 @@
 /**
  * Created by YOU on 2018/3/27.
  */
-const ArticleGroup = require('../../models').ArticleGroup
+const {
+  Op,
+  ArticleGroup
+} = require('../../models')
 
 const createArticleGroup = (params) => {
   params = _.pick(params, ['name', 'description', 'author_id'])
@@ -41,10 +44,20 @@ const deleteArticleGroupById = (query) => {
     }
   ).then(data => data, err => err)
 }
+
+const getArticleGroupByIdList = (query) => {
+  return ArticleGroup.findAll({
+    id: {
+      [Op.or]: query['idList']
+    }
+  }).then(data => data, err => err)
+}
+
 module.exports = {
   createArticleGroup,
   getArticleGroupById,
   getArticleGroupsByAuthorId,
   updateArticleGroupById,
-  deleteArticleGroupById
+  deleteArticleGroupById,
+  getArticleGroupByIdList
 }

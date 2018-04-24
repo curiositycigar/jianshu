@@ -1,7 +1,10 @@
 /**
  * Created by YOU on 2018/3/22.
  */
-const Author = require('../../models').Author
+const {
+  Op,
+  Author
+} = require('../../models')
 const encrypt = require('../../utils').encrypt
 
 const createAuthor = (params) => {
@@ -80,6 +83,14 @@ const updateAuthorPasswordById = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
+const getAuthorByIdList = (query) => {
+  return Author.findAll({
+    id: {
+      [Op.or]: query['idList']
+    }
+  }).then(data => data, err => err)
+}
+
 module.exports = {
   createAuthor,
   deleteAuthorById,
@@ -88,5 +99,6 @@ module.exports = {
   getAuthorById,
   updateAuthorById,
   updateAuthorPasswordByIdPassword,
-  updateAuthorPasswordById
+  updateAuthorPasswordById,
+  getAuthorByIdList
 }

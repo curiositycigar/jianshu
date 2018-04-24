@@ -2,6 +2,7 @@
  * Created by YOU on 2018/4/8.
  */
 const {
+  Op,
   Comment
 } = require('../../models')
 
@@ -33,10 +34,19 @@ const getComment = (query) => {
   }).then(data => data, err => err)
 }
 
+const getCommentByIdList = (query) => {
+  return Comment.findAll({
+    id: {
+      [Op.or]: query['idList']
+    }
+  }).then(data => data, err => err)
+}
+
 
 module.exports = {
   createComment,
   deleteComment,
   getComment,
-  getComments
+  getComments,
+  getCommentByIdList
 }

@@ -2,6 +2,7 @@
  * Created by YOU on 2018/4/1.
  */
 const {
+  Op,
   Subject
 } = require('../../models')
 
@@ -51,11 +52,20 @@ const updateSubject = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
+const geSubjectByIdList = (query) => {
+  return Subject.findAll({
+    id: {
+      [Op.or]: query['idList']
+    }
+  }).then(data => data, err => err)
+}
+
 module.exports = {
   createSubject,
   getSubjectById,
   getSubjectsByAuthorId,
   deleteSubject,
   updateSubject,
-  checkSubjectAuthor
+  checkSubjectAuthor,
+  geSubjectByIdList
 }

@@ -2,6 +2,7 @@
  * Created by YOU on 2018/3/26.
  */
 const {
+  Op,
   Article
 } = require('../../models')
 
@@ -48,11 +49,20 @@ const getArticle = (query) => {
   }).then(data => data, err => err)
 }
 
+const getArticleByIdList = (query) => {
+  return Article.findAll({
+    id: {
+      [Op.or]: query['idList']
+    }
+  }).then(data => data, err => err)
+}
+
 
 module.exports = {
   createArticle,
   updateArticleById,
   deleteArticleById,
   getArticles,
-  getArticle
+  getArticle,
+  getArticleByIdList
 }
