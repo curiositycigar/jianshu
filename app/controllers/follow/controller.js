@@ -23,7 +23,7 @@ const {
   getArticleGroupByIdList
 } = require('../../service/article_group')
 const {
-  geSubjectByIdList
+  getSubjectByIdList
 } = require('../../service/subject')
 
 exports.followAG = async (ctx, next) => {
@@ -44,7 +44,7 @@ exports.followA = async (ctx, next) => {
   let field = _.pick(params, requireField)
   field.author_id = ctx.state[tokenKey].id
   if (_.hasAll(field, requireField)) {
-    let result = await createFollowArticleGroup(field)
+    let result = await createFollowAuthor(field)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -56,7 +56,7 @@ exports.followS = async (ctx, next) => {
   let field = _.pick(params, requireField)
   field.author_id = ctx.state[tokenKey].id
   if (_.hasAll(field, requireField)) {
-    let result = await createFollowArticleGroup(field)
+    let result = await createFollowSubject(field)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -104,19 +104,39 @@ exports.getFollowedAG = async (ctx, next) => {
     author_id: ctx.state[tokenKey].id
   })
   let data = ctx.setBody(result)
-  ctx.body = data
+  if (!data.error && data.data && data.data.length) {
+    ctx.body = ctx.setBody(await getArticleGroupByIdList({
+      idList: data.data.map(item => item.id)
+    }))
+  } else {
+    ctx.body = data
+  }
 }
 exports.getFollowedA = async (ctx, next) => {
   let result = await getFollowAuthors({
     author_id: ctx.state[tokenKey].id
   })
-  ctx.body = ctx.setBody(result)
+  let data = ctx.setBody(result)
+  if (!data.error && data.data && data.data.length) {
+    ctx.body = ctx.setBody(await getAuthorByIdList({
+      idList: data.data.map(item => item.id)
+    }))
+  } else {
+    ctx.body = data
+  }
 }
 exports.getFollowedS = async (ctx, next) => {
   let result = await getFollowSubjects({
     author_id: ctx.state[tokenKey].id
   })
-  ctx.body = ctx.setBody(result)
+  let data = ctx.setBody(result)
+  if (!data.error && data.data && data.data.length) {
+    ctx.body = ctx.setBody(await getSubjectByIdList({
+      idList: data.data.map(item => item.id)
+    }))
+  } else {
+    ctx.body = data
+  }
 }
 exports.getAGFollowed = async (ctx, next) => {
   let params = ctx.query
@@ -124,7 +144,14 @@ exports.getAGFollowed = async (ctx, next) => {
   let query = _.pick(params, requireField)
   if (_.hasAll(query, requireField)) {
     let result = await getFollowArticleGroups(query)
-    ctx.body = ctx.setBody(result)
+    let data = ctx.setBody(result)
+    if (!data.error && data.data && data.data.length) {
+      ctx.body = ctx.setBody(await getArticleGroupByIdList({
+        idList: data.data.map(item => item.id)
+      }))
+    } else {
+      ctx.body = data
+    }
   } else {
     ctx.throw(400)
   }
@@ -135,7 +162,14 @@ exports.getAFollowed = async (ctx, next) => {
   let query = _.pick(params, requireField)
   if (_.hasAll(query, requireField)) {
     let result = await getFollowAuthors(query)
-    ctx.body = ctx.setBody(result)
+    let data = ctx.setBody(result)
+    if (!data.error && data.data && data.data.length) {
+      ctx.body = ctx.setBody(await getAuthorByIdList({
+        idList: data.data.map(item => item.id)
+      }))
+    } else {
+      ctx.body = data
+    }
   } else {
     ctx.throw(400)
   }
@@ -146,7 +180,14 @@ exports.getSFollowed = async (ctx, next) => {
   let query = _.pick(params, requireField)
   if (_.hasAll(query, requireField)) {
     let result = await getFollowSubjects(query)
-    ctx.body = ctx.setBody(result)
+    let data = ctx.setBody(result)
+    if (!data.error && data.data && data.data.length) {
+      ctx.body = ctx.setBody(await getSubjectByIdList({
+        idList: data.data.map(item => item.id)
+      }))
+    } else {
+      ctx.body = data
+    }
   } else {
     ctx.throw(400)
   }

@@ -52,7 +52,7 @@ const updateSubject = (query, field) => {
   ).then(data => data[0] > 0, err => err)
 }
 
-const geSubjectByIdList = (query) => {
+const getSubjectByIdList = (query) => {
   return Subject.findAll({
     id: {
       [Op.or]: query['idList']
@@ -67,5 +67,5 @@ module.exports = {
   deleteSubject,
   updateSubject,
   checkSubjectAuthor,
-  geSubjectByIdList
+  getSubjectByIdList
 }
