@@ -10,11 +10,11 @@ const createLikeArticle = (params) => {
   return LikeArticle.create(params).then(data => data, err => err)
 }
 
-const deleteLikeArticle = (query, field) => {
-  query = _.pick(query, ['author_id', 'article_id'])
+const deleteLikeArticle = (params) => {
+  params = _.pick(params, ['author_id', 'article_id'])
   return LikeArticle.destroy(
     {
-      where: query
+      where: params
     }
   ).then(data => data[0] > 0, err => err)
 }

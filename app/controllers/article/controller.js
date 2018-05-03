@@ -9,6 +9,11 @@ const {
   getArticles,
   getArticle
 } = require('../../service/article')
+const {
+  createLikeArticle,
+  deleteLikeArticle,
+  getLikeArticles
+} = require('../../service/like_article')
 
 const {
   getArticleGroupById
@@ -114,4 +119,43 @@ exports.changeArticleStatus = async (ctx, next) => {
   } else {
     ctx.throw(400)
   }
+}
+
+// 喜欢文章
+exports.likeArticle = async (ctx, next) => {
+  let params = _.pick(params, ['article_id'])
+  params.author_id = ctx.state[tokenKey].id
+  if (params.article_id) {
+    let result = createLikeArticle(params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.deleteLikeArticle = async (ctx, next) => {
+  let params = _.pick(params, ['article_id'])
+  params.author_id = ctx.state[tokenKey].id
+  if (params.article_id) {
+    let result = deleteLikeArticle(params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.getLikeUsers = async (ctx, next) => {
+  let query = _.pick(params, ['article_id'])
+  if (query.article_id) {
+    let result = getLikeArticles(params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.getLikeArticles = async (ctx, next) => {
+  query.author_id = ctx.state[tokenKey].id
+  let result = deleteLikeArticle(params)
+  ctx.body = ctx.setBody(result)
 }
