@@ -7,8 +7,10 @@ const {
   updateArticleById,
   deleteArticleById,
   getArticles,
-  getArticle
+  getArticle,
+  getArticleByIdList
 } = require('../../service/article')
+
 const {
   createLikeArticle,
   deleteLikeArticle,
@@ -18,6 +20,10 @@ const {
 const {
   getArticleGroupById
 } = require('../../service/article_group')
+
+const {
+  getAuthorByIdList
+} = require('../../service/author')
 
 const {
   tokenKey
@@ -147,8 +153,12 @@ exports.deleteLikeArticle = async (ctx, next) => {
 exports.getLikeUsers = async (ctx, next) => {
   let query = _.pick(params, ['article_id'])
   if (query.article_id) {
-    let result = getLikeArticles(params)
-    ctx.body = ctx.setBody(result)
+    let result = ctx.setBody(getLikeArticles(params))
+    if (result.error) {
+      ctx.body = ctx.setBody(null, '获取用户列表失败')
+    } else {
+
+    }
   } else {
     ctx.throw(400)
   }
