@@ -157,7 +157,9 @@ exports.getLikeUsers = async (ctx, next) => {
     if (result.error) {
       ctx.body = ctx.setBody(null, '获取用户列表失败')
     } else {
-
+      let arr = result.data.map(item => item.author_id)
+      result = getAuthorByIdList({idList: arr})
+      ctx.body = ctx.setBody(result)
     }
   } else {
     ctx.throw(400)
@@ -166,6 +168,12 @@ exports.getLikeUsers = async (ctx, next) => {
 
 exports.getLikeArticles = async (ctx, next) => {
   query.author_id = ctx.state[tokenKey].id
-  let result = deleteLikeArticle(params)
-  ctx.body = ctx.setBody(result)
+  let result = ctx.setBody(deleteLikeArticle(params))
+  if (result.error) {
+    ctx.body = ctx.setBody(null, '获取文章列表失败')
+  } else {
+    let arr = result.data.map(item => item.article_id)
+    result = getArticleByIdList({idList: arr})
+    ctx.body = ctx.setBody(result)
+  }
 }
