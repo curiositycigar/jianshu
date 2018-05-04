@@ -11,6 +11,12 @@ const {
 } = require('../../service/author')
 
 const {
+  createReword,
+  getRewordsByAuthor,
+  getRewordsByTarget
+} = require('../../service/reword')
+
+const {
   createBlackList,
   deleteBlackList,
   blacked,
@@ -110,5 +116,39 @@ exports.getBlacks = async (ctx, next) => {
   let result = await getBlackLists({
     author_id: ctx.state[tokenKey].id
   })
+  ctx.body = ctx.setBody(result)
+}
+
+// 打赏
+
+exports.giveReword = async (ctx, next) => {
+  let required = ['target_id', 'count']
+  let params = _.pick(ctx.query, required)
+  params.author_id = ctx.state[tokenKey].id
+  if (_.hasAll(params, required)) {
+    let result = createReword(params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.getRewords = async (ctx, next) => {
+  let params = {
+    target_id: params.author_id
+  }
+  if (params.target_id) {
+    let result = getRewordsByTarget(params)
+    ctx.body = ctx.setBody(result)
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.getMyRewords = async (ctx, next) => {
+  let params = {
+    author_id: ctx.state[tokenKey].id
+  }
+  let result = createReword(params)
   ctx.body = ctx.setBody(result)
 }

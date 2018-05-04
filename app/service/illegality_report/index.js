@@ -2,7 +2,8 @@
  * Created by YOU on 2018/4/9.
  */
 const {
-  IllegalityReport
+  IllegalityReport,
+  Op
 } = require('../../models')
 
 const createIllegalityReport = (params) => {
@@ -10,11 +11,17 @@ const createIllegalityReport = (params) => {
   return IllegalityReport.create(params).then(data => data, err => err)
 }
 
-const getIllegalityReports = (query) => {
-  query = _.pick(query, ['author_id'])
-  return IllegalityReport.findAll({
-    where: query
-  }).then(data => data, err => err)
+// 不提供批量操作
+const deleteIllegalityReport = (query) => {
+  query = _.pick(query, ['author_id', 'id'])
+  return IllegalityReport.destroy(
+    {
+      where: query
+    }
+  ).then(data => data[0] > 0, err => err)
+}
+const getIllegalityReports = () => {
+  return IllegalityReport.findAll().then(data => data, err => err)
 }
 
 const getIllegalityReport = (query) => {
@@ -27,5 +34,6 @@ const getIllegalityReport = (query) => {
 module.exports = {
   createIllegalityReport,
   getIllegalityReport,
-  getIllegalityReports
+  getIllegalityReports,
+  deleteIllegalityReport
 }

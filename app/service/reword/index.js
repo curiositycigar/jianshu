@@ -26,9 +26,6 @@ const getRewordsByTarget = (query) => {
 
 module.exports = {
   createReword,
-  deleteReword,
-  updateReword,
-  getReword,
-  getRewordById,
-  getRewords
+  getRewordsByAuthor,
+  getRewordsByTarget
 }

@@ -6,8 +6,15 @@ const {
   getSubjectById,
   getSubjectsByAuthorId,
   deleteSubject,
-  updateSubject
+  updateSubject,
+  checkSubjectAuthor
 } = require('../../service/subject')
+
+const {
+  createSubjectManager,
+  deleteSubjectManager,
+  checkSubjectManager
+} = require('../../service/subject_manager')
 
 exports.createSubject = async (ctx, next) => {
   let params = _.pick(ctx.query, ['name', 'description'])
@@ -78,6 +85,45 @@ exports.getSubject = async (ctx, next) => {
   if (id) {
     let result = await getSubjectById(id)
     ctx.body = ctx.setBody(result, '专题不存在')
+  } else {
+    ctx.throw(400)
+  }
+}
+
+// 专题管理员
+exports.createManager = async (ctx, next) => {
+  let required = ['subject_id', 'author_id']
+  let params = _.pick(ctx.query, required)
+  if (_.hasAll(params, required)) {
+    // 检查是不是专题所有者
+    let check = ctx.setBody(checkSubjectAuthor({
+      id: params.subject_id,
+      author_id: ctx.state[tokenKey].id
+    }))
+    if (check.error) {
+      ctx.body = ctx.setBody(result, '权限验证失败')
+    } else {
+      let result = createSubjectManager(params)
+      ctx.body = ctx.setBody(result, '专题不存在')
+    }
+  } else {
+    ctx.throw(400)
+  }
+}
+
+exports.deleteManager = async (ctx, next) => {
+  let required = ['subject_id', 'author_id']
+  let params = _.pick(ctx.query, required)
+  if (_.hasAll(params, required)) {
+    // 检查是不是专题所有者
+    let check = ctx.setBody(checkSubjectAuthor({
+      id: params.subject_id,
+      author_id: ctx.state[tokenKey].id
+    }))
+    if (check.error) {
+      let result = deleteSubjectManager(params)
+      ctx.body = ctx.setBody(result, '专题不存在')
+    }
   } else {
     ctx.throw(400)
   }
