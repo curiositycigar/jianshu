@@ -96,7 +96,7 @@ exports.updateArticle = async (ctx, next) => {
   let params = _.pick(params, ['title', 'content'])
   query.author_id = ctx.state[tokenKey].id
   if (query.id && params.title && params.content) {
-    let result = updateArticleById(query, params)
+    let result = await updateArticleById(query, params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -108,7 +108,7 @@ exports.moveArticle = async (ctx, next) => {
   let params = _.pick(params, ['article_group_id'])
   query.author_id = ctx.state[tokenKey].id
   if (query.id && params.title && params.content) {
-    let result = updateArticleById(query, params)
+    let result = await updateArticleById(query, params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -120,7 +120,7 @@ exports.changeArticleStatus = async (ctx, next) => {
   let params = _.pick(params, ['is_public'])
   query.author_id = ctx.state[tokenKey].id
   if (query.id && params.title && params.content) {
-    let result = updateArticleById(query, params)
+    let result = await updateArticleById(query, params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -132,7 +132,7 @@ exports.likeArticle = async (ctx, next) => {
   let params = _.pick(params, ['article_id'])
   params.author_id = ctx.state[tokenKey].id
   if (params.article_id) {
-    let result = createLikeArticle(params)
+    let result = await createLikeArticle(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -143,7 +143,7 @@ exports.deleteLikeArticle = async (ctx, next) => {
   let params = _.pick(params, ['article_id'])
   params.author_id = ctx.state[tokenKey].id
   if (params.article_id) {
-    let result = deleteLikeArticle(params)
+    let result = await deleteLikeArticle(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -153,12 +153,12 @@ exports.deleteLikeArticle = async (ctx, next) => {
 exports.getLikeUsers = async (ctx, next) => {
   let query = _.pick(params, ['article_id'])
   if (query.article_id) {
-    let result = ctx.setBody(getLikeArticles(params))
+    let result = ctx.setBody(await getLikeArticles(params))
     if (result.error) {
       ctx.body = ctx.setBody(null, '获取用户列表失败')
     } else {
       let arr = result.data.map(item => item.author_id)
-      result = getAuthorByIdList({idList: arr})
+      result = await getAuthorByIdList({idList: arr})
       ctx.body = ctx.setBody(result)
     }
   } else {
@@ -168,12 +168,12 @@ exports.getLikeUsers = async (ctx, next) => {
 
 exports.getLikeArticles = async (ctx, next) => {
   query.author_id = ctx.state[tokenKey].id
-  let result = ctx.setBody(deleteLikeArticle(params))
+  let result = ctx.setBody(await deleteLikeArticle(params))
   if (result.error) {
     ctx.body = ctx.setBody(null, '获取文章列表失败')
   } else {
     let arr = result.data.map(item => item.article_id)
-    result = getArticleByIdList({idList: arr})
+    result = await getArticleByIdList({idList: arr})
     ctx.body = ctx.setBody(result)
   }
 }

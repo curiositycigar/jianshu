@@ -10,8 +10,8 @@ const createSysMessage = (params) => {
   return SysMessage.create(params).then(data => data, err => err)
 }
 
-const deleteSysMessage = (query, field) => {
-  query = _.pick(query, ['author_id'])
+const deleteSysMessage = (query) => {
+  query = _.pick(query, ['id', 'author_id'])
   return SysMessage.destroy(
     {
       where: query
@@ -21,14 +21,14 @@ const deleteSysMessage = (query, field) => {
 
 const updateSysMessage = (query, field) => {
   query = _.pick(query, ['id', 'author_id'])
-  field = _.pick(field, ['is_readed'])
+  field = _.pick(field, ['is_read'])
   return SysMessage.update(field, {
     where: query
   }).then(data => data, err => err)
 }
 
 const getSysMessages = (query) => {
-  query = _.pick(query, ['author_id', 'is_readed'])
+  query = _.pick(query, ['author_id', 'is_read'])
   return SysMessage.findAll({
     where: query
   }).then(data => data, err => err)

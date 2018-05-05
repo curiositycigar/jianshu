@@ -10,9 +10,10 @@ const {
 } = require('../../service/article_group')
 
 exports.createArticleGroup = async (ctx, next) => {
-  let params = ctx.query
+  let required = ['name', 'description']
+  let params = _.pick(ctx.query, required)
   params.author_id = ctx.state[tokenKey].id
-  if (params.name && params.description && params.author_id) {
+  if (_.hasAll(params, required)) {
     let result = await createArticleGroup(params)
     ctx.body = ctx.setBody(result, '新建文集失败 ,请稍后再试')
   } else {
@@ -21,14 +22,16 @@ exports.createArticleGroup = async (ctx, next) => {
 }
 
 exports.updateArticleGroup = async (ctx, next) => {
-  let {id, ...params} = ctx.query
-  let query = {
-    id: id,
-    author_id: ctx.state[tokenKey].id
-  }
-  if (id && (params.name || params.description)) {
-    let result = await updateArticleGroupById(query, params)
-    ctx.body = ctx.setBody(result, '更新失败')
+  let required = ['id']
+  let requiredOne = ['name', 'description']
+  let params = _.pick(ctx.query, [...required, ...requiredOne])
+  if (_.hasAll(params, required) && _.hasOne(params, requiredOne)) {
+    let query = {
+      id: params,
+      author_id: ctx.state[tokenKey].id
+    }
+    let field = _.pick(params, requiredOne)
+    ctx.body = ctx.setBody(await updateArticleGroupById(query, field), '更新失败')
   } else {
     ctx.throw(400)
   }
@@ -56,7 +59,11 @@ exports.getArticleGroup = async (ctx, next) => {
 }
 
 exports.getArticleGroups = async (ctx, next) => {
-  let author_id = ctx.query.author_id || ctx.state[tokenKey].id
+  let author_id = ctx.query.author_id
+  if (ctx.state[tokenKey] && ctx.state[tokenKey].id) {
+    // 登录状态
+    author_id = author_id || ctx.state[tokenKey].id
+  }
   if (author_id) {
     let result = await getArticleGroupsByAuthorId(author_id)
     ctx.body = ctx.setBody(result, '获取失败')

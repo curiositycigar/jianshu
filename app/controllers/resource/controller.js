@@ -14,16 +14,29 @@ exports.create = async (ctx, next) => {
   let params = _.pick(ctx.query, required)
   params.author_id = ctx.state[tokenKey].id
   if (_.hasAll(params, required)) {
-    ctx.body = ctx.setBody(createResource(params))
+    ctx.body = ctx.setBody(await createResource(params))
   } else {
     ctx.throw(400)
   }
 }
 
 exports.delete = async (ctx, next) => {
-
+  let required = ['id']
+  let params = _.pick(ctx.query, required)
+  params.author_id = ctx.state[tokenKey].id
+  if (_.hasAll(params, required)) {
+    ctx.body = ctx.setBody(await deleteResource(params))
+  } else {
+    ctx.throw(400)
+  }
 }
 
 exports.get = async (ctx, next) => {
-
+  let required = ['id']
+  let params = _.pick(ctx.query, required)
+  if (_.hasAll(params, required)) {
+    ctx.body = ctx.setBody(await getResource(params))
+  } else {
+    ctx.throw(400)
+  }
 }

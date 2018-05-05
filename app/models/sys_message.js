@@ -29,7 +29,7 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.CHAR(100),
       allowNull: false
     },
-    is_readed: {
+    is_read: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false

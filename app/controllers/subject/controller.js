@@ -20,7 +20,7 @@ exports.createSubject = async (ctx, next) => {
   let params = _.pick(ctx.query, ['name', 'description'])
   params.author_id = ctx.state[tokenKey].id
   if (params.name && params.description && params.author_id) {
-    let result = createSubject(params)
+    let result = await createSubject(params)
     ctx.body = ctx.setBody(result, '创建失败')
   } else {
     ctx.throw(400)
@@ -96,14 +96,14 @@ exports.createManager = async (ctx, next) => {
   let params = _.pick(ctx.query, required)
   if (_.hasAll(params, required)) {
     // 检查是不是专题所有者
-    let check = ctx.setBody(checkSubjectAuthor({
+    let check = ctx.setBody(await checkSubjectAuthor({
       id: params.subject_id,
       author_id: ctx.state[tokenKey].id
     }))
     if (check.error) {
-      ctx.body = ctx.setBody(result, '权限验证失败')
+      ctx.body = ctx.setBody(null, '权限验证失败')
     } else {
-      let result = createSubjectManager(params)
+      let result = await createSubjectManager(params)
       ctx.body = ctx.setBody(result, '专题不存在')
     }
   } else {
@@ -116,12 +116,12 @@ exports.deleteManager = async (ctx, next) => {
   let params = _.pick(ctx.query, required)
   if (_.hasAll(params, required)) {
     // 检查是不是专题所有者
-    let check = ctx.setBody(checkSubjectAuthor({
+    let check = ctx.setBody(await checkSubjectAuthor({
       id: params.subject_id,
       author_id: ctx.state[tokenKey].id
     }))
     if (check.error) {
-      let result = deleteSubjectManager(params)
+      let result = await deleteSubjectManager(params)
       ctx.body = ctx.setBody(result, '专题不存在')
     }
   } else {

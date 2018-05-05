@@ -126,7 +126,7 @@ exports.giveReword = async (ctx, next) => {
   let params = _.pick(ctx.query, required)
   params.author_id = ctx.state[tokenKey].id
   if (_.hasAll(params, required)) {
-    let result = createReword(params)
+    let result = await createReword(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -138,7 +138,7 @@ exports.getRewords = async (ctx, next) => {
     target_id: params.author_id
   }
   if (params.target_id) {
-    let result = getRewordsByTarget(params)
+    let result = await getRewordsByTarget(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -146,9 +146,7 @@ exports.getRewords = async (ctx, next) => {
 }
 
 exports.getMyRewords = async (ctx, next) => {
-  let params = {
+  ctx.body = ctx.setBody(await getRewordsByAuthor({
     author_id: ctx.state[tokenKey].id
-  }
-  let result = createReword(params)
-  ctx.body = ctx.setBody(result)
+  }))
 }

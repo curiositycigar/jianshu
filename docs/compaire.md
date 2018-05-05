@@ -12,5 +12,5 @@
 会话(conversation)
 会话消息(conversation_message)
 举报(illegality_report) --done
-资源(resource)
-系统消息(sys_message)
+资源(resource) --done
+系统消息(sys_message) --done

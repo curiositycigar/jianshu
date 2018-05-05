@@ -8,5 +8,7 @@ const {
 } = require('../../auth')
 
 router.get('/create', authenticated(), controller.create);
+router.get('/delete', authenticated(), controller.delete);
+router.get('/get', authenticated(), controller.get);
 
 module.exports = router;

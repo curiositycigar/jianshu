@@ -100,7 +100,7 @@ exports.getMyContribute = async (ctx, next) => {
   // 专题id || 是否通过审核
   let query = _.pick(ctx.query, ['subject_id', 'access'])
   query.author_id = ctx.state[tokenKey].id
-  let result = getContributes(query)
+  let result = await getContributes(query)
   ctx.body = ctx.setBody(result)
 }
 
@@ -114,7 +114,7 @@ exports.getContribute = async (ctx, next) => {
     // 检查是否是管理者
     check = ctx.setBody(await checkSubjectManager({
       author_id: ctx.state[tokenKey].id,
-      subject_id: subject.data.id
+      subject_id: subjectQuery.id
     }))
   }
   if (check.error) {

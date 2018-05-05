@@ -13,7 +13,7 @@ exports.create = async (ctx) => {
   let params = _.pick(ctx.query, required)
   params.author_id = ctx.state[tokenKey].id
   if (_.hasAll(params, required)) {
-    let result = createIllegalityReport(params)
+    let result = await createIllegalityReport(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -25,7 +25,7 @@ exports.delete = async (ctx) => {
   let params = _.pick(ctx.query, required)
   params.author_id = ctx.state[tokenKey].id
   if (_.hasAll(params, required)) {
-    let result = deleteIllegalityReport(params)
+    let result = await deleteIllegalityReport(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -36,7 +36,7 @@ exports.getOne = async (ctx) => {
   let required = ['id']
   let params = _.pick(ctx.query, required)
   if (_.hasAll(params, required)) {
-    let result = getIllegalityReport(params)
+    let result = await getIllegalityReport(params)
     ctx.body = ctx.setBody(result)
   } else {
     ctx.throw(400)
@@ -47,9 +47,9 @@ exports.getMine = async (ctx) => {
   let params = {
     author_id: ctx.state[tokenKey].id
   }
-  ctx.body = ctx.setBody(getIllegalityReport(params))
+  ctx.body = ctx.setBody(await getIllegalityReport(params))
 }
 
 exports.getAll = async (ctx) => {
-  ctx.body = ctx.setBody(getIllegalityReports())
+  ctx.body = ctx.setBody(await getIllegalityReports())
 }
